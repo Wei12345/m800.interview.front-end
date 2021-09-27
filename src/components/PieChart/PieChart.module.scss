@@ -1,0 +1,16 @@
+.PieChart {
+  border-radius: 50%;
+  &__Circle {
+    transform-origin: center;
+    transform: rotate(-90deg);
+    fill: gray;
+    stroke: lightblue;
+    stroke-width: 100%;
+  }
+  &__Text {
+    fill: white;
+    font-size: 12px;
+    dominant-baseline: middle;
+    text-anchor: middle;
+  }
+}
