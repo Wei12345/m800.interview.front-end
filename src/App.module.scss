@@ -1,0 +1,9 @@
+.App {
+  &__PieChartWrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__PieChart {
+    width: 10%;
+  }
+}
