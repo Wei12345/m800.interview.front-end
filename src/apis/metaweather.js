@@ -12,7 +12,7 @@ export async function getLocations({ query }) {
 
 export async function getLocation({ woeid }) {
   if (woeid > -1) {
-    const response = await fetch(`${BASE_URL}/${woeid}`);
+    const response = await fetch(`${BASE_URL}/${woeid}/`);
     const data = await response.json()
     return data;
   }
