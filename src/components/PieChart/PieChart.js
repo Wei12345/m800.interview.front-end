@@ -14,7 +14,7 @@ export default function PieChart({ className, percentage }) {
         r="50%"
         cx="50%"
         cy="50%"
-        stroke-dasharray={`${percentageLength} ${circumference}`}
+        strokeDasharray={`${percentageLength} ${circumference}`}
         className={styles.PieChart__Circle}
       />
       <text x="50%" y="50%" className={styles.PieChart__Text} >{percentage}%</text>
