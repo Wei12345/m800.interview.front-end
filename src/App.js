@@ -1,8 +1,11 @@
 import { useCallback, useState, useRef, useMemo, useEffect } from "react";
 
+import uniqueId from "./lib/uniqueId";
+
 import { getLocations, getLocation } from './apis/metaweather'
 
 import PieChart from './components/PieChart/PieChart';
+import BarChart from './components/BarChart/BarChart';
 
 import styles from './App.module.scss'
 
@@ -44,6 +47,54 @@ function App() {
     fetchLocation(locationWoeid);
   }, [locationWoeid])
 
+  const chartData = useMemo(() => {
+    if (!consolidatedWeather) {
+      return {
+        pie: [],
+        bar: {
+          labels: [],
+          datasets: [],
+        }
+      }
+    }
+
+    const pie = consolidatedWeather.map(({ humidity, applicable_date }) => ({
+      humidity,
+      label: applicable_date,
+    }))
+
+    const roundToTwoDecimalPoint = num => Math.round(num * 100) / 100
+
+    const barLabels = consolidatedWeather.map(({ applicable_date }) => applicable_date);
+    const barDatasets = consolidatedWeather.map(({ max_temp, min_temp }) => [
+      roundToTwoDecimalPoint(min_temp),
+      roundToTwoDecimalPoint(max_temp)
+    ]);
+
+    return {
+      pie,
+      bar: {
+        labels: barLabels,
+        datasets: barDatasets,
+      }
+    }
+  }, [consolidatedWeather])
+
+  const pieChart = useMemo(() => {
+    return chartData.pie.map(({ label, humidity }) =>
+      (
+        <div
+          key={uniqueId()}
+          className={styles.App__PieChartItem}
+        >
+          <PieChart className={styles.App__PieChart} percentage={humidity} />
+          {label}
+        </div>
+      )
+    )
+
+  }, [chartData])
+
   return (
     <div className="App">
       <input list="location-list" type="text" value={value} onChange={handleChange}></input>
@@ -51,7 +102,16 @@ function App() {
         {datalistOptions}
       </datalist>
       <div className={styles.App__PieChartWrapper}>
-        <PieChart className={styles.App__PieChart} percentage={20} />
+        {pieChart}
+      </div>
+      <div>
+        <BarChart
+          labels={{
+            x: chartData.bar.labels,
+            y: [-60, -50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50, 60]
+          }}
+          datasets={chartData.bar.datasets}
+        />
       </div>
     </div>
   );

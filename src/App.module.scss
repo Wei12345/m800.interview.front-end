@@ -1,9 +1,16 @@
 .App {
   &__PieChartWrapper {
+    padding: 20px;
     display: flex;
     justify-content: space-between;
   }
-  &__PieChart {
+  &__PieChartItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 10%;
+  }
+  &__PieChartText {
     width: 10%;
   }
 }
