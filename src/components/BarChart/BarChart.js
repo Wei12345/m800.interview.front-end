@@ -48,10 +48,8 @@ export default function BarChart({ className, labels, datasets }) {
   }, [PADDING, contentWidth, contentHeight, xLabels]);
 
   const bars = useMemo(() => {
-    console.log(yLabels[0], yLabels[yLabels.length - 1])
     const [minY, maxY] = [yLabels[0], yLabels[yLabels.length - 1]];
     const points = maxY - minY;
-    console.log(points);
 
     return datasets.map(([minData, maxData], index) => {
       const positionX = PADDING + index / xLabels.length * contentWidth;
