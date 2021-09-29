@@ -1,0 +1,9 @@
+.BarChart {
+  &__Line {
+    stroke: black;
+  }
+  &__Text {
+    font-size: 12px;
+    dominant-baseline: middle;
+  }
+}
